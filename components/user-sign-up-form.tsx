@@ -42,6 +42,8 @@ export function UserSignUpForm() {
     },
   });
 
+  // @ts-expect-error: ignore for now.
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
 
@@ -58,6 +60,7 @@ export function UserSignUpForm() {
       });
 
       navigate('/sign-in');
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       toast({
         title: 'Something went wrong.',

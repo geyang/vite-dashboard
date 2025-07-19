@@ -1,5 +1,7 @@
-'use client';
-
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import { z } from 'zod';
+import { navigate } from 'vike/client/router';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import {
@@ -11,17 +13,13 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { GitHubButton } from '@/app/(auth)/github-button';
-import { GoogleButton } from '@/app/(auth)/google-button';
+import { GitHubButton } from '../github-button';
+import { GoogleButton } from '../google-button';
 import { Separator } from '@/components/ui/separator';
-import { authClient } from '@/lib/auth-client';
-import { formSchema } from '@/lib/auth-schema';
+import { authClient } from '@/lib/auth/auth-client';
+import { formSchema } from '@/lib/auth/auth-schema';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { redirect } from 'next/navigation';
-import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
-import { z } from 'zod';
 
 export default function SignUpForm() {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -47,9 +45,9 @@ export default function SignUpForm() {
         },
         onSuccess: () => {
           form.reset();
-          redirect('/sign-in');
+          navigate('/sign-in');
         },
-        onError: (ctx) => {
+        onError: (ctx: { error: { message: string } }) => {
           toast.error(ctx.error.message);
         },
       },
@@ -58,7 +56,7 @@ export default function SignUpForm() {
 
   return (
     <Card className='grid gap-6 p-6'>
-      <div className='grid gap-2'>
+      <div className='grid gap-6'>
         <GitHubButton className='w-full'>Sign Up via GitHub</GitHubButton>
         <GoogleButton className='w-full'>Sign Up via GitHub</GoogleButton>
       </div>

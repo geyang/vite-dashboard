@@ -1,6 +1,5 @@
-'use client';
 
-import { PropsWithChildren } from 'react';
+import type { PropsWithChildren } from 'react';
 import { Button } from '@/components/ui/button';
 import { SiGoogle } from 'react-icons/si';
 import { signInWithGoogle } from '@/actions/authAction';

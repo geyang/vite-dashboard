@@ -1,4 +1,4 @@
-import './index.css';
+import './global.css';
 import { type PropsWithChildren, StrictMode } from 'react';
 import { HelmetProvider } from '@vuer-ai/react-helmet-async';
 

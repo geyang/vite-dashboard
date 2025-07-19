@@ -1,6 +1,4 @@
-'use client';
-
-import { PropsWithChildren } from 'react';
+import type { PropsWithChildren } from 'react';
 import { Button } from '@/components/ui/button';
 import { SiGithub } from 'react-icons/si';
 import { signInWithGitHub } from '@/actions/authAction';

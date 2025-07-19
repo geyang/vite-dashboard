@@ -1,11 +1,14 @@
-import type { ElementType, ReactNode } from 'react';
+import type {
+  ComponentPropsWithoutRef,
+  ElementType,
+  PropsWithChildren,
+} from 'react';
 import React from 'react';
 import { usePageContext } from 'vike-react/usePageContext';
 
-interface LinkProps {
+interface LinkProps extends PropsWithChildren, ComponentPropsWithoutRef<'a'> {
   href: string;
   className?: string;
-  children: ReactNode;
   render?: ElementType;
 }
 

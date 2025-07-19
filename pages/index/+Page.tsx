@@ -1,5 +1,5 @@
 import { ArrowRight, Feather } from 'lucide-react';
-import { SiGithub } from '@icons-pack/react-simple-icons';
+import { SiGithub } from 'react-icons/si';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
