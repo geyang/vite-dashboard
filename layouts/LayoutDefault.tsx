@@ -5,7 +5,7 @@ import { HelmetProvider } from '@vuer-ai/react-helmet-async';
 export default function LayoutDefault({ children }: PropsWithChildren) {
   return (
     <HelmetProvider>
-      <StrictMode>{children}</StrictMode>;
+      <StrictMode>{children}</StrictMode>
     </HelmetProvider>
   );
 }
