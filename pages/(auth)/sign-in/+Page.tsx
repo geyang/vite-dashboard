@@ -13,7 +13,7 @@ export default function Page() {
         <div className="relative z-20 mt-auto">
           <blockquote className="space-y-2">
             <p className="text-lg">
-              &ldquo;Solve general physical intelligence -- one policy gradient at a time.&rdquo;
+              &ldquo;We are solving general physical intelligence -- one policy gradient at a time.&rdquo;
             </p>
             <footer className="text-sm">FortyFive Labs</footer>
           </blockquote>
