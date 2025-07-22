@@ -1,5 +1,3 @@
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import {
   Table,
   TableBody,
@@ -17,6 +15,7 @@ import { SidebarTrigger } from '@/components/ui/sidebar';
 import { Separator } from '@/components/ui/separator';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { useState } from 'react';
+import { CursorButton, CursorInput, CursorTableRow } from '@/components/highlight-cursor';
 
 // Mock data for organizations
 const organizations: Organization[] = [
@@ -74,7 +73,7 @@ export default function AdminOrganizationsPage() {
 
   return (
     <div
-      className='grid gap-6 transition-[grid-template-columns] duration-300 ease-in-out h-full'
+      className='grid [&>*+*]:ml-6 transition-[grid-template-columns] duration-300 ease-in-out h-full'
       style={{
         gridTemplateColumns: isPanelOpen
           ? 'minmax(0, 1fr) 500px'
@@ -94,22 +93,22 @@ export default function AdminOrganizationsPage() {
           <div className='flex items-center gap-2'>
             <div className='relative w-64'>
               <Search className='absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground' />
-              <Input
+              <CursorInput
                 type='search'
                 placeholder='Search organizations...'
                 className='pl-8'
               />
             </div>
-            <Button variant='outline'>Filter</Button>
+            <CursorButton variant='outline'>Filter</CursorButton>
           </div>
-          <Button
+          <CursorButton
             variant='ghost'
             className='hover:bg-primary hover:text-primary-foreground'
             onClick={handleAddClick}
           >
             <PlusCircle className='mr-2 h-4 w-4' />
             Add Organization
-          </Button>
+          </CursorButton>
         </div>
         <div className='rounded-md border overflow-auto flex-1'>
           <Table className='min-w-[600px]'>
@@ -124,7 +123,7 @@ export default function AdminOrganizationsPage() {
             </TableHeader>
             <TableBody>
               {organizations.map((org) => (
-                <TableRow
+                <CursorTableRow
                   key={org.id}
                   onClick={() => handleRowClick(org)}
                   className={cn(
@@ -151,7 +150,7 @@ export default function AdminOrganizationsPage() {
                   <TableCell>
                     {new Date(org.createdAt).toLocaleDateString()}
                   </TableCell>
-                </TableRow>
+                </CursorTableRow>
               ))}
             </TableBody>
           </Table>

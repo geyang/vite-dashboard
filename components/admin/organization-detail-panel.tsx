@@ -1,6 +1,5 @@
-"use client"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { CursorButton } from "@/components/highlight-cursor"
+import { CursorInput } from "@/components/highlight-cursor"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import type { Organization } from "@/lib/types"
@@ -26,10 +25,10 @@ export function OrganizationDetailPanel({ organization, onClose }: OrganizationD
       {organization && (
         <Card className="h-full rounded-lg border flex flex-col">
           <CardHeader className="flex flex-row items-start gap-4">
-            <Button variant="ghost" size="icon" onClick={onClose} className="shrink-0">
+            <CursorButton variant="ghost" size="icon" onClick={onClose} className="shrink-0">
               <X className="h-4 w-4" />
               <span className="sr-only">Close panel</span>
-            </Button>
+            </CursorButton>
             <div>
               <CardTitle>Organization Details</CardTitle>
               <CardDescription>View and edit organization information.</CardDescription>
@@ -42,13 +41,13 @@ export function OrganizationDetailPanel({ organization, onClose }: OrganizationD
                 <Label htmlFor="org-name" className="text-right">
                   Name
                 </Label>
-                <Input id="org-name" defaultValue={organization.name} className="col-span-3" />
+                <CursorInput id="org-name" defaultValue={organization.name} className="col-span-3" />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="org-slug" className="text-right">
                   Slug
                 </Label>
-                <Input id="org-slug" defaultValue={organization.slug} className="col-span-3" />
+                <CursorInput id="org-slug" defaultValue={organization.slug} className="col-span-3" />
               </div>
 
               <Separator />
@@ -102,12 +101,12 @@ export function OrganizationDetailPanel({ organization, onClose }: OrganizationD
             </div>
           </CardContent>
           <CardFooter className="mt-auto border-t pt-6">
-            <Button variant="outline" onClick={onClose}>
+            <CursorButton variant="outline" onClick={onClose}>
               Cancel
-            </Button>
-            <Button type="submit" className="ml-auto">
+            </CursorButton>
+            <CursorButton type="submit" className="ml-auto">
               Save Changes
-            </Button>
+            </CursorButton>
           </CardFooter>
         </Card>
       )}

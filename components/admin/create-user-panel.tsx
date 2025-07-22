@@ -1,7 +1,5 @@
-"use client"
-
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { CursorButton } from "@/components/highlight-cursor"
+import { CursorInput } from "@/components/highlight-cursor"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -23,10 +21,10 @@ export function CreateUserPanel({ isOpen, onClose }: CreateUserPanelProps) {
     >
       <Card className="max-h-full rounded-lg border flex flex-col">
         <CardHeader className="flex flex-row items-start gap-4">
-          <Button variant="ghost" size="icon" onClick={onClose} className="shrink-0">
+          <CursorButton variant="ghost" size="icon" onClick={onClose} className="shrink-0">
             <X className="h-4 w-4" />
             <span className="sr-only">Close panel</span>
-          </Button>
+          </CursorButton>
           <div>
             <CardTitle>Add New User</CardTitle>
             <CardDescription>Fill in the details to create a new user account.</CardDescription>
@@ -47,36 +45,36 @@ export function CreateUserPanel({ isOpen, onClose }: CreateUserPanelProps) {
                 <Label htmlFor="new-first-name" className="text-right">
                   First Name
                 </Label>
-                <Input id="new-first-name" placeholder="John" className="col-span-3" />
+                <CursorInput id="new-first-name" placeholder="John" className="col-span-3" />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="new-last-name" className="text-right">
                   Last Name
                 </Label>
-                <Input id="new-last-name" placeholder="Doe" className="col-span-3" />
+                <CursorInput id="new-last-name" placeholder="Doe" className="col-span-3" />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="new-email" className="text-right">
                   Email
                 </Label>
-                <Input id="new-email" placeholder="john.doe@example.com" type="email" className="col-span-3" />
+                <CursorInput id="new-email" placeholder="john.doe@example.com" type="email" className="col-span-3" />
               </div>
               <Separator />
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="new-password" className="text-right">
                   Password
                 </Label>
-                <Input id="new-password" type="password" className="col-span-3" />
+                <CursorInput id="new-password" type="password" className="col-span-3" />
               </div>
             </div>
           </CardContent>
           <CardFooter className="mt-auto border-t pt-6">
-            <Button variant="outline" type="button" onClick={onClose}>
+            <CursorButton variant="outline" type="button" onClick={onClose}>
               Cancel
-            </Button>
-            <Button type="submit" className="ml-auto">
+            </CursorButton>
+            <CursorButton type="submit" className="ml-auto">
               Create User
-            </Button>
+            </CursorButton>
           </CardFooter>
         </form>
       </Card>

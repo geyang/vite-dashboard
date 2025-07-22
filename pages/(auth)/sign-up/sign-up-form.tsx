@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
 import { navigate } from 'vike/client/router';
-import { Button } from '@/components/ui/button';
+import { CursorButton } from '@/components/highlight-cursor';
 import { Card } from '@/components/ui/card';
 import {
   Form,
@@ -12,7 +12,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+import { CursorInput } from '@/components/highlight-cursor';
 import { GitHubButton } from '../github-button';
 import { GoogleButton } from '../google-button';
 import { Separator } from '@/components/ui/separator';
@@ -81,7 +81,7 @@ export default function SignUpForm() {
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input placeholder='John Doe' {...field} />
+                  <CursorInput placeholder='John Doe' {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -94,7 +94,7 @@ export default function SignUpForm() {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input placeholder='m@example.com' {...field} />
+                  <CursorInput placeholder='m@example.com' {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -107,15 +107,15 @@ export default function SignUpForm() {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input type='password' placeholder='********' {...field} />
+                  <CursorInput type='password' placeholder='********' {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button type='submit' className='w-full mt-2'>
+          <CursorButton type='submit' className='w-full mt-2'>
             Sign up with email
-          </Button>
+          </CursorButton>
         </form>
       </Form>
     </Card>
