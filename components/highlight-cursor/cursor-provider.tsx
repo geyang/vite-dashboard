@@ -158,10 +158,18 @@ export const CursorProvider = ({
     ],
   );
 
+
+  let styleClass;
+  if (hoveredElementId) {
+    styleClass = `opacity-[0.05] rounded-md transition-[width,height,left,top] duration-${transitionDuration} ease-out`;
+  } else {
+    styleClass = `opacity-90 rounded-xl z-10 transition-[width,height,left,top] duration-${transitionDuration} ease-out transition-opacity duration-${transitionDuration}`;
+  }
+
   // Create cursor element to be portaled
   const cursorElement = isMouseInside && (
     <div
-      className={`fixed pointer-events-none bg-[black] dark:bg-[white] transition-all duration-${transitionDuration} ease-out ${hoveredElementId ? 'opacity-[0.05] rounded-md' : 'opacity-90 rounded-xl z-10'} ${cursorClassName || ''}`}
+      className={`fixed pointer-events-none bg-[black] dark:bg-[white] ${styleClass} ${hoveredElementId ? '' : cursorClassName || ''}`}
       style={cursorStyleObject}
     />
   );
