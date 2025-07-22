@@ -1,5 +1,4 @@
-import { CursorButton } from "@/components/highlight-cursor"
-import { CursorInput } from "@/components/highlight-cursor"
+import { CursorButton, CursorInput, CursorProvider } from "@/components/highlight-cursor"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -19,7 +18,7 @@ export function CreateUserPanel({ isOpen, onClose }: CreateUserPanelProps) {
         isOpen ? "opacity-100" : "opacity-0 pointer-events-none",
       )}
     >
-      <Card className="max-h-full rounded-lg border flex flex-col">
+              <CursorProvider className="max-h-full rounded-lg border flex flex-col" as={Card}>
         <CardHeader className="flex flex-row items-start gap-4">
           <CursorButton variant="ghost" size="icon" onClick={onClose} className="shrink-0">
             <X className="h-4 w-4" />
@@ -77,7 +76,7 @@ export function CreateUserPanel({ isOpen, onClose }: CreateUserPanelProps) {
             </CursorButton>
           </CardFooter>
         </form>
-      </Card>
+      </CursorProvider>
     </div>
   )
 }

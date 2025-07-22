@@ -1,20 +1,8 @@
-import { useEffect, useState, useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { createPortal } from 'react-dom';
 import type { CursorProviderProps } from './types';
 import { CursorContext } from './cursor-context';
-
-// Define CSS variables for cursor styling
-const getCursorStyles = (color?: string) => {
-  // We'll use Tailwind's primary color via classes instead of CSS variables
-  return `
-:root {
-  /* We're now using Tailwind classes for colors */
-}
-
-.dark {
-  /* Dark mode handled by Tailwind dark: variant */
-}
-`;
-};
+import { cn } from '@/lib/utils';
 
 export const CursorProvider = ({
   children,
@@ -23,8 +11,11 @@ export const CursorProvider = ({
   cursorSize = 20,
   transitionDuration = 100,
   cursorClassName,
-  cursorColor,
+  className,
+  as: Component = 'div',
+  ...props
 }: CursorProviderProps) => {
+  const [isMouseInside, setIsMouseInside] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [hoveredElementId, setHoveredElementId] = useState<string | null>(null);
   const [elementDimensions, setElementDimensions] = useState({
@@ -32,6 +23,8 @@ export const CursorProvider = ({
     height: 0,
     x: 0,
     y: 0,
+    right: 0,
+    bottom: 0,
   });
 
   useEffect(() => {
@@ -43,24 +36,9 @@ export const CursorProvider = ({
     return () => document.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  const registerHoveredElement = useCallback((id: string, dimensions: DOMRect) => {
-    setHoveredElementId(id);
-    setElementDimensions({
-      width: dimensions.width,
-      height: dimensions.height,
-      x: dimensions.left,
-      y: dimensions.top,
-      right: dimensions.right,
-      bottom: dimensions.bottom,
-    });
-  }, []);
-
-  const unregisterHoveredElement = useCallback(() => {
-    setHoveredElementId(null);
-  }, []);
-
-  const updateElementDimensions = useCallback((dimensions: DOMRect) => {
-    if (hoveredElementId) {
+  const registerHoveredElement = useCallback(
+    (id: string, dimensions: DOMRect) => {
+      setHoveredElementId(id);
       setElementDimensions({
         width: dimensions.width,
         height: dimensions.height,
@@ -69,10 +47,31 @@ export const CursorProvider = ({
         right: dimensions.right,
         bottom: dimensions.bottom,
       });
-    }
-  }, [hoveredElementId]);
+    },
+    [],
+  );
 
-  const getCursorPosition = useCallback(() => {
+  const unregisterHoveredElement = useCallback(() => {
+    setHoveredElementId(null);
+  }, []);
+
+  const updateElementDimensions = useCallback(
+    (dimensions: DOMRect) => {
+      if (hoveredElementId) {
+        setElementDimensions({
+          width: dimensions.width,
+          height: dimensions.height,
+          x: dimensions.left,
+          y: dimensions.top,
+          right: dimensions.right,
+          bottom: dimensions.bottom,
+        });
+      }
+    },
+    [hoveredElementId],
+  );
+
+  const getCursorPosition = () => {
     if (!hoveredElementId) {
       return {
         x: mousePosition.x - cursorSize / 2,
@@ -96,11 +95,19 @@ export const CursorProvider = ({
       x: elementDimensions.x + boundedOffsetX,
       y: elementDimensions.y + boundedOffsetY,
     };
-  }, [hoveredElementId, mousePosition, elementDimensions, cursorSize, maxOffsetX, maxOffsetY]);
+  };
 
-  const cursorPosition = getCursorPosition();
+  const handleMouseEnter = useCallback(() => {
+    setIsMouseInside(true);
+  }, []);
 
-  const contextValue = useMemo(() => ({
+  const handleMouseLeave = useCallback(() => {
+    setIsMouseInside(false);
+    setHoveredElementId(null);
+  }, []);
+
+  const contextValue = useMemo(
+    () => ({
       // State values that change during component lifecycle
       mousePosition,
       hoveredElementId,
@@ -110,39 +117,79 @@ export const CursorProvider = ({
       registerHoveredElement,
       unregisterHoveredElement,
       updateElementDimensions,
-  }), [
-    mousePosition,
-    hoveredElementId,
-    elementDimensions,
-    registerHoveredElement,
-    unregisterHoveredElement,
-    updateElementDimensions,
-    // Props that don't change after initial render don't need to be dependencies
-    // unless they're used in callback functions that are dependencies
-  ]);
+    }),
+    [
+      mousePosition,
+      hoveredElementId,
+      elementDimensions,
+      registerHoveredElement,
+      unregisterHoveredElement,
+      updateElementDimensions,
+      // Props that don't change after initial render don't need to be dependencies
+      // unless they're used in callback functions that are dependencies
+    ],
+  );
 
+  const cursorPosition = getCursorPosition();
+
+  const cursorStyleObject = useMemo(
+    () => ({
+      left: cursorPosition.x,
+      top: cursorPosition.y,
+      width: hoveredElementId
+        ? elementDimensions.width > 0
+          ? elementDimensions.width
+          : cursorSize
+        : cursorSize,
+      height: hoveredElementId
+        ? elementDimensions.height > 0
+          ? elementDimensions.height
+          : cursorSize
+        : cursorSize,
+      willChange: 'transform, width, height',
+    }),
+    [
+      cursorPosition.x,
+      cursorPosition.y,
+      hoveredElementId,
+      elementDimensions.width,
+      elementDimensions.height,
+      cursorSize,
+    ],
+  );
+
+  // Create cursor element to be portaled
+  const cursorElement = isMouseInside && (
+    <div
+      className={`fixed pointer-events-none bg-[black] dark:bg-[white] transition-all duration-${transitionDuration} ease-out ${hoveredElementId ? 'opacity-[0.05] rounded-md' : 'opacity-90 rounded-xl z-10'} ${cursorClassName || ''}`}
+      style={cursorStyleObject}
+    />
+  );
+
+  // Use React.Fragment at the top level to avoid any DOM structure that might affect layout
   return (
-    <CursorContext.Provider
-      value={contextValue}
-    >
-      <style dangerouslySetInnerHTML={{ __html: getCursorStyles(cursorColor) }} />
-      <div
-        className={`fixed pointer-events-none z-50 transition-all duration-${transitionDuration} ease-out ${hoveredElementId ? 'opacity-50' : 'opacity-35'} ${cursorClassName || ''}`}
-        style={useMemo(() => ({
-          left: cursorPosition.x,
-          top: cursorPosition.y,
-          width: hoveredElementId ? (elementDimensions.width > 0 ? elementDimensions.width : cursorSize) : cursorSize,
-          height: hoveredElementId ? (elementDimensions.height > 0 ? elementDimensions.height : cursorSize) : cursorSize,
-          willChange: 'transform, width, height',
-        }), [cursorPosition.x, cursorPosition.y, hoveredElementId, elementDimensions.width, elementDimensions.height, cursorSize])}
-      >
-        <div
-          className={`w-full h-full transition-all duration-${transitionDuration} ease-out ${hoveredElementId ? 'rounded-md' : 'rounded-full'} bg-primary/5 dark:bg-primary/10 backdrop-blur-[1px] ring-1 ring-primary/5 dark:ring-primary/10`}
-        />
-      </div>
-      <div className={hoveredElementId ? 'cursor-auto' : 'cursor-none'}>
-        {children}
-      </div>
-    </CursorContext.Provider>
+    <>
+      {/* Portal the cursor overlay to document.body to completely avoid layout impact */}
+      {typeof document !== 'undefined' &&
+        document.body &&
+        cursorElement &&
+        createPortal(cursorElement, document.body)}
+      {/* Context provider with no DOM element */}
+      <CursorContext.Provider value={contextValue}>
+        {/* Use the Component directly with no extra wrappers */}
+        <Component
+          {...props}
+          className={cn(className)}
+          style={{
+            cursor: isMouseInside && !hoveredElementId ? 'none' : 'auto',
+            ...props.style,
+          }}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          {children}
+        </Component>
+      </CursorContext.Provider>
+    </>
   );
 };

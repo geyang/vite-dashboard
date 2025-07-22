@@ -14,21 +14,16 @@ export interface CursorContextType {
   registerHoveredElement: (id: string, dimensions: DOMRect) => void;
   unregisterHoveredElement: () => void;
   updateElementDimensions: (dimensions: DOMRect) => void;
-  maxOffsetX: number;
-  maxOffsetY: number;
-  cursorSize: number;
-  transitionDuration: number;
-  cursorClassName?: string;
 }
 
-export interface CursorProviderProps {
+export interface CursorProviderProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
   maxOffsetX?: number;
   maxOffsetY?: number;
   cursorSize?: number;
   transitionDuration?: number;
   cursorClassName?: string;
-  cursorColor?: string; // Custom cursor color
+  as?: React.ElementType;
 }
 
 export interface WithCursorProps {

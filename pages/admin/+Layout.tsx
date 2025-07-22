@@ -3,7 +3,6 @@ import { SidebarProvider } from '@/components/ui/sidebar';
 import { Helmet } from '@vuer-ai/react-helmet-async';
 import { ThemeProvider } from '@/components/theme-provider.tsx';
 import type { PropsWithChildren } from 'react';
-import { CursorProvider } from '@/components/highlight-cursor';
 
 export default function AdminLayout({ children }: PropsWithChildren<unknown>) {
   const mockUser = {
@@ -21,12 +20,10 @@ export default function AdminLayout({ children }: PropsWithChildren<unknown>) {
         <meta name={mockUser.email} content='admin@example.com' />
       </Helmet>
       <ThemeProvider>
-        <CursorProvider>
-          <SidebarProvider>
-            <AppSidebar user={mockUser} isAdmin={true} />
-            <main className='flex-1 overflow-auto p-4 md:p-6'>{children}</main>
-          </SidebarProvider>
-        </CursorProvider>
+        <SidebarProvider>
+          <AppSidebar user={mockUser} isAdmin={true} />
+          <main className='flex-1 overflow-auto p-4 md:p-6'>{children}</main>
+        </SidebarProvider>
       </ThemeProvider>
     </>
   );

@@ -15,10 +15,6 @@ const defaultContext: CursorContextType = {
   registerHoveredElement: () => {},
   unregisterHoveredElement: () => {},
   updateElementDimensions: () => {},
-  maxOffsetX: 5,
-  maxOffsetY: 20,
-  cursorSize: 20,
-  transitionDuration: 100,
 };
 
 export const CursorContext = createContext<CursorContextType>(defaultContext);

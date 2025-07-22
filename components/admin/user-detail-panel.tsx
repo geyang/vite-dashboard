@@ -1,5 +1,4 @@
-import { CursorButton } from "@/components/highlight-cursor"
-import { CursorInput } from "@/components/highlight-cursor"
+import { CursorButton, CursorInput, CursorProvider } from "@/components/highlight-cursor"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -24,7 +23,7 @@ export function UserDetailPanel({ user, onClose }: UserDetailPanelProps) {
       )}
     >
       {user && (
-        <Card className="h-full rounded-lg border flex flex-col">
+                  <CursorProvider className="h-full rounded-lg border flex flex-col" as={Card}>
           <CardHeader className="flex flex-row items-start gap-4">
             <CursorButton variant="ghost" size="icon" onClick={onClose} className="shrink-0">
               <X className="h-4 w-4" />
@@ -125,7 +124,7 @@ export function UserDetailPanel({ user, onClose }: UserDetailPanelProps) {
               Save Changes
             </CursorButton>
           </CardFooter>
-        </Card>
+        </CursorProvider>
       )}
     </div>
   )

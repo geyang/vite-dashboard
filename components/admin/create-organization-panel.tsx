@@ -1,5 +1,4 @@
-import { CursorButton } from "@/components/highlight-cursor"
-import { CursorInput } from "@/components/highlight-cursor"
+import { CursorButton, CursorInput, CursorProvider } from "@/components/highlight-cursor"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -20,7 +19,7 @@ export function CreateOrganizationPanel({ isOpen, onClose }: CreateOrganizationP
         isOpen ? "opacity-100" : "opacity-0 pointer-events-none",
       )}
     >
-      <Card className="max-h-full rounded-lg border flex flex-col">
+              <CursorProvider className="max-h-full rounded-lg border flex flex-col" as={Card}>
         <CardHeader className="flex flex-row items-start gap-4">
           <CursorButton variant="ghost" size="icon" onClick={onClose} className="shrink-0">
             <X className="h-4 w-4" />
@@ -97,7 +96,7 @@ export function CreateOrganizationPanel({ isOpen, onClose }: CreateOrganizationP
             </CursorButton>
           </CardFooter>
         </form>
-      </Card>
+      </CursorProvider>
     </div>
   )
 }

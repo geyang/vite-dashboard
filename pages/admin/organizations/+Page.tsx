@@ -15,7 +15,7 @@ import { SidebarTrigger } from '@/components/ui/sidebar';
 import { Separator } from '@/components/ui/separator';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { useState } from 'react';
-import { CursorButton, CursorInput, CursorTableRow } from '@/components/highlight-cursor';
+import { CursorButton, CursorInput, CursorTableRow, CursorProvider } from '@/components/highlight-cursor';
 
 // Mock data for organizations
 const organizations: Organization[] = [
@@ -80,7 +80,7 @@ export default function AdminOrganizationsPage() {
           : 'minmax(0, 1fr) 0px',
       }}
     >
-      <div className='min-w-0 flex flex-col h-full gap-4'>
+      <CursorProvider className='min-w-0 flex flex-col h-full gap-4'>
         <div className='flex items-center justify-between'>
           <div className='flex items-center gap-2'>
             <SidebarTrigger />
@@ -102,8 +102,8 @@ export default function AdminOrganizationsPage() {
             <CursorButton variant='outline'>Filter</CursorButton>
           </div>
           <CursorButton
-            variant='ghost'
-            className='hover:bg-primary hover:text-primary-foreground'
+            variant='subtle'
+            // className='cursor-pointer hover:bg-primary hover:text-primary-foreground'
             onClick={handleAddClick}
           >
             <PlusCircle className='mr-2 h-4 w-4' />
@@ -155,7 +155,7 @@ export default function AdminOrganizationsPage() {
             </TableBody>
           </Table>
         </div>
-      </div>
+      </CursorProvider>
       <div className='overflow-hidden relative h-full'>
         <OrganizationDetailPanel
           organization={selectedOrg}
