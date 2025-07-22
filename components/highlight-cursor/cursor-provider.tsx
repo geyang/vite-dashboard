@@ -2,6 +2,20 @@ import { useEffect, useState, useCallback, useMemo } from 'react';
 import type { CursorProviderProps } from './types';
 import { CursorContext } from './cursor-context';
 
+// Define CSS variables for cursor styling
+const getCursorStyles = (color?: string) => {
+  // We'll use Tailwind's primary color via classes instead of CSS variables
+  return `
+:root {
+  /* We're now using Tailwind classes for colors */
+}
+
+.dark {
+  /* Dark mode handled by Tailwind dark: variant */
+}
+`;
+};
+
 export const CursorProvider = ({
   children,
   maxOffsetX = 5,
@@ -9,6 +23,7 @@ export const CursorProvider = ({
   cursorSize = 20,
   transitionDuration = 100,
   cursorClassName,
+  cursorColor,
 }: CursorProviderProps) => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [hoveredElementId, setHoveredElementId] = useState<string | null>(null);
@@ -35,6 +50,8 @@ export const CursorProvider = ({
       height: dimensions.height,
       x: dimensions.left,
       y: dimensions.top,
+      right: dimensions.right,
+      bottom: dimensions.bottom,
     });
   }, []);
 
@@ -49,6 +66,8 @@ export const CursorProvider = ({
         height: dimensions.height,
         x: dimensions.left,
         y: dimensions.top,
+        right: dimensions.right,
+        bottom: dimensions.bottom,
       });
     }
   }, [hoveredElementId]);
@@ -106,22 +125,19 @@ export const CursorProvider = ({
     <CursorContext.Provider
       value={contextValue}
     >
+      <style dangerouslySetInnerHTML={{ __html: getCursorStyles(cursorColor) }} />
       <div
-        className={`fixed pointer-events-none z-50 transition-all duration-${transitionDuration} ease-out ${cursorClassName || ''}`}
+        className={`fixed pointer-events-none z-50 transition-all duration-${transitionDuration} ease-out ${hoveredElementId ? 'opacity-50' : 'opacity-35'} ${cursorClassName || ''}`}
         style={useMemo(() => ({
           left: cursorPosition.x,
           top: cursorPosition.y,
-          width: hoveredElementId ? elementDimensions.width : cursorSize,
-          height: hoveredElementId ? elementDimensions.height : cursorSize,
+          width: hoveredElementId ? (elementDimensions.width > 0 ? elementDimensions.width : cursorSize) : cursorSize,
+          height: hoveredElementId ? (elementDimensions.height > 0 ? elementDimensions.height : cursorSize) : cursorSize,
+          willChange: 'transform, width, height',
         }), [cursorPosition.x, cursorPosition.y, hoveredElementId, elementDimensions.width, elementDimensions.height, cursorSize])}
       >
         <div
-          className={`w-full h-full bg-gray-300/10 backdrop-blur-xxs border border-white/50 shadow-lg transition-all duration-${transitionDuration} ease-out ${hoveredElementId ? 'rounded-md' : 'rounded-full'}`}
-          style={useMemo(() => ({
-            boxShadow: hoveredElementId
-              ? '0 0 25px rgba(255, 255, 255, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.5)'
-              : '0 0 15px rgba(255, 255, 255, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.6)',
-          }), [hoveredElementId])}
+          className={`w-full h-full transition-all duration-${transitionDuration} ease-out ${hoveredElementId ? 'rounded-md' : 'rounded-full'} bg-primary/5 dark:bg-primary/10 backdrop-blur-[1px] ring-1 ring-primary/5 dark:ring-primary/10`}
         />
       </div>
       <div className={hoveredElementId ? 'cursor-auto' : 'cursor-none'}>

@@ -62,7 +62,108 @@ const MyComponent = ({ children }) => (
 );
 
 const CursorMyComponent = withCursor(MyComponent);
+# Highlight Cursor Component
 
+A customizable cursor highlight effect for interactive elements in your React application.
+
+## Features
+
+- Smooth cursor following with subtle movement
+- Highlights hovered elements
+- Automatically adjusts to element size
+- Smart detection of partially visible elements in scrollable containers
+- Customizable appearance including colors and sizes
+- Dark mode support
+
+## Usage
+
+### Basic Setup
+
+1. Wrap your application with the `CursorProvider`:
+
+```tsx
+import { CursorProvider } from '@/components/highlight-cursor';
+
+function App() {
+  return (
+    <CursorProvider>
+      <YourApp />
+    </CursorProvider>
+  );
+}
+```
+
+### Using Enhanced Components
+
+Use the pre-enhanced components that come with cursor effects:
+
+```tsx
+import { CursorButton, CursorInput, CursorTableRow } from '@/components/highlight-cursor';
+
+function MyComponent() {
+  return (
+    <div>
+      <CursorButton>Click Me</CursorButton>
+      <CursorInput placeholder="Type here..." />
+      <Table>
+        <CursorTableRow>Your table content</CursorTableRow>
+      </Table>
+    </div>
+  );
+}
+```
+
+### Creating Custom Components
+
+You can enhance any component with cursor effects using the `withCursor` HOC:
+
+```tsx
+import { withCursor } from '@/components/highlight-cursor';
+import { YourComponent } from './your-component';
+
+const CursorYourComponent = withCursor(YourComponent);
+```
+
+## Customization
+
+You can customize the cursor appearance by passing props to the `CursorProvider`:
+
+```tsx
+<CursorProvider
+  cursorSize={24} // Size of the cursor when not hovering (default: 20)
+  maxOffsetX={10} // Maximum X offset when following cursor (default: 5)
+  maxOffsetY={15} // Maximum Y offset when following cursor (default: 20)
+  transitionDuration={150} // Animation duration in ms (default: 100)
+  cursorColor="rgba(100, 200, 255, 1)" // Custom cursor color (RGB format recommended)
+  cursorClassName="my-custom-cursor" // Additional CSS classes
+>
+  <YourApp />
+</CursorProvider>
+```
+
+### Styling
+
+The cursor uses a subtle minimalist design with Tailwind CSS classes:
+- Light primary color with low opacity for a gentle highlight effect
+- Thin ring border that adapts automatically to light/dark mode
+- Subtle backdrop blur for a modern glass-like effect
+- Responsive opacity levels for a non-intrusive presence
+- Circular shape for default cursor, rounded corners when highlighting elements
+```
+
+## How It Works
+
+The cursor highlight works by:
+
+1. Tracking mouse position across the document
+2. Detecting when the mouse enters interactive elements
+3. Calculating the visible portion of the element (handling overflow containers)
+4. Rendering a styled overlay that follows the cursor and adapts to element shapes
+5. Smoothly transitioning between states for a polished effect
+
+## Browser Compatibility
+
+This component works in all modern browsers that support React. For optimal performance, browsers with good CSS transition support are recommended.
 export default function App() {
   return (
     <CursorProvider>

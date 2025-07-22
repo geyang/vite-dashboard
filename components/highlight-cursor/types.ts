@@ -8,6 +8,8 @@ export interface CursorContextType {
     height: number;
     x: number;
     y: number;
+    right?: number;
+    bottom?: number;
   };
   registerHoveredElement: (id: string, dimensions: DOMRect) => void;
   unregisterHoveredElement: () => void;
@@ -26,6 +28,7 @@ export interface CursorProviderProps {
   cursorSize?: number;
   transitionDuration?: number;
   cursorClassName?: string;
+  cursorColor?: string; // Custom cursor color
 }
 
 export interface WithCursorProps {
