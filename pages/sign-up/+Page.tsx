@@ -19,7 +19,7 @@ export default function SignUpPage() {
         </div>
         <UserSignUpForm />
         <p className='px-8 text-center text-sm text-muted-foreground'>
-          Already have an account?{' '}
+          Already have an account?
           <Link
             href='/sign-in'
             className='underline underline-offset-4 hover:text-primary'

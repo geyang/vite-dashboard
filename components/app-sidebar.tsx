@@ -68,7 +68,7 @@ export function AppSidebar({ user, isAdmin = true }: AppSidebarProps) {
           <div className='flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground'>
             <Feather className='h-6 w-6' />
           </div>
-          <div className='font-semibold text-lg group-data-[state=collapsed]:hidden'>
+          <div className='font-semibold text-lg group-data-[state=collapsed]:hidden select-none'>
             AuthKit
           </div>
         </div>

@@ -26,10 +26,10 @@ export default function LandingPage() {
         <div className='container mx-auto flex h-16 items-center justify-between px-4 md:px-6'>
           <Link
             href='/public'
-            className='flex items-center gap-2 font-bold text-lg'
+            className='flex items-center gap-2 font-bold text-lg select-none'
           >
             <Feather className='h-6 w-6' />
-            <span>AuthKit</span>
+            AuthKit
           </Link>
           <nav className='hidden md:flex items-center gap-6 text-sm font-medium'>
             <Link
