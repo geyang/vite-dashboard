@@ -35,7 +35,7 @@ export const signInWithGoogle = async () => {
      */
     callbackURL: window.location.origin + '/',
     /**
-     * A URL to redirect if an error occurs during the sign in process
+     * A URL to redirect if an error occurs during the sign-in process
      */
     // errorCallbackURL: "/error",
     /**
@@ -65,7 +65,7 @@ export const signInWithGitHub = async () => {
      */
     callbackURL: window.location.origin + '/',
     /**
-     * A URL to redirect if an error occurs during the sign in process
+     * A URL to redirect if an error occurs during the sign-up process
      */
     // errorCallbackURL: "/error",
     /**
