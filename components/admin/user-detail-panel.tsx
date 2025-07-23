@@ -1,10 +1,10 @@
 import { CursorButton, CursorInput, CursorProvider } from "@/components/highlight-cursor"
+import { CursorSwitch } from "@/components/ui/cursor-switch"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import type { ClerkUser } from "@/lib/types"
 import { Badge } from "@/components/ui/badge"
-import { Switch } from "@/components/ui/switch"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { X } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -86,14 +86,14 @@ export function UserDetailPanel({ user, onClose }: UserDetailPanelProps) {
                     <Label htmlFor="banned-switch">Banned</Label>
                     <p className="text-xs text-muted-foreground">Prevent this user from signing in.</p>
                   </div>
-                  <Switch id="banned-switch" defaultChecked={user.banned} />
+                  <CursorSwitch id="banned-switch" defaultChecked={user.banned} />
                 </div>
                 <div className="flex items-center justify-between rounded-lg border p-3 shadow-sm">
                   <div className="space-y-0.5">
                     <Label htmlFor="locked-switch">Locked</Label>
                     <p className="text-xs text-muted-foreground">Temporarily lock this user's account.</p>
                   </div>
-                  <Switch id="locked-switch" defaultChecked={user.locked} />
+                  <CursorSwitch id="locked-switch" defaultChecked={user.locked} />
                 </div>
               </div>
 
