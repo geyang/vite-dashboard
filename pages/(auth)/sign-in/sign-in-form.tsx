@@ -50,7 +50,7 @@ export function SignInForm() {
     <Card className='grid gap-6 p-6'>
       <div className='grid gap-6'>
         <GitHubButton className='w-full'>Sign In via GitHub</GitHubButton>
-        <GoogleButton className='w-full'>Sign In via GitHub</GoogleButton>
+        <GoogleButton className='w-full'>Sign In via Google</GoogleButton>
       </div>
       <div className='relative'>
         <div className='absolute inset-0 flex items-center'>

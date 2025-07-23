@@ -58,7 +58,7 @@ export default function SignUpForm() {
     <Card className='grid gap-6 p-6'>
       <div className='grid gap-6'>
         <GitHubButton className='w-full'>Sign Up via GitHub</GitHubButton>
-        <GoogleButton className='w-full'>Sign Up via GitHub</GoogleButton>
+        <GoogleButton className='w-full'>Sign Up via Google</GoogleButton>
       </div>
 
       <div className='relative'>
